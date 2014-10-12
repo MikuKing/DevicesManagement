@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:orientation="vertical"
+    android:scrollbars="vertical"
+    tools:context="com.csei.devicemanagement.LoginActivity" >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="horizontal" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="60dp"
+            android:background="#FFFFFF"
+            android:orientation="vertical"
+            android:paddingBottom="20dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="20dp"
+            android:scrollbars="vertical" >
+
+            <EditText
+                android:id="@+id/input_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/login_edittext_bg"
+                android:ems="10"
+                android:hint="@string/input_username"
+                android:paddingBottom="5dp"
+                android:paddingLeft="2dp"
+                android:paddingTop="5dp"
+                android:textSize="15sp"
+                android:singleLine="true" >
+
+                <requestFocus />
+            </EditText>
+
+            <EditText
+                android:id="@+id/input_passwords"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/login_edittext_bg"
+                android:ems="10"
+                android:hint="@string/input_passwords"
+                android:paddingBottom="5dp"
+                android:paddingLeft="2dp"
+                android:paddingTop="5dp"
+                android:textSize="15sp"
+                android:singleLine="true" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="#FFFFFF" >
+
+                <CheckBox
+                    android:id="@+id/show_passwords"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="22dp"
+                    android:layout_weight="1"
+                    android:text="@string/show_passwords" />
+
+                <CheckBox
+                    android:id="@+id/remember_passwords"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="22dp"
+                    android:layout_weight="1"
+                    android:text="@string/remember_passwords" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/submit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="@string/submit" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
