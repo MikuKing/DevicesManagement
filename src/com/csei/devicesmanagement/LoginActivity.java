@@ -1,9 +1,12 @@
 package com.csei.devicesmanagement;
 
+import java.util.HashMap;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.csei.client.CasClient;
+import com.csei.database.entity.service.imple.UserServiceImple;
 import com.csei.util.Informations;
 
 import android.annotation.SuppressLint;
@@ -30,7 +33,7 @@ public class LoginActivity extends Activity {
 	private Button button;
 	private EditText passwords;
 	private EditText username;
-	private String name;
+	private String uname;
 	private String pswords;
 	private CheckBox show_passwords, remember_passwords;
 	private Informations informations = null;
@@ -46,6 +49,7 @@ public class LoginActivity extends Activity {
 	private String userRole1;
 
 	private Handler handler;
+	private UserServiceImple userDao;
 
 	// private
 	@SuppressLint("HandlerLeak")
@@ -54,9 +58,13 @@ public class LoginActivity extends Activity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
+		userDao=new UserServiceImple(LoginActivity.this);
 
 		passwords = (EditText) findViewById(R.id.input_passwords);
 		username = (EditText) findViewById(R.id.input_username);
+		
+		username.setText("xiaozhujun");
+		passwords.setText("123456");
 
 		passwords.setTransformationMethod(PasswordTransformationMethod
 				.getInstance());
@@ -68,7 +76,7 @@ public class LoginActivity extends Activity {
 				// TODO Auto-generated method stub
 				if (keyCode == KeyEvent.KEYCODE_ENTER
 						&& event.getAction() == KeyEvent.ACTION_DOWN) {
-					name = username.getText().toString().trim();
+					uname = username.getText().toString().trim();
 					pswords = passwords.getText().toString().trim();
 					new Thread(new MyThread()).start();
 				}
@@ -102,7 +110,7 @@ public class LoginActivity extends Activity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 
-				name = username.getText().toString().trim();
+				uname = username.getText().toString().trim();
 				pswords = passwords.getText().toString().trim();
 
 				new Thread(new MyThread()).start();
@@ -117,12 +125,16 @@ public class LoginActivity extends Activity {
 
 				switch (msg.what) {
 				case 1:
+					Toast.makeText(getApplicationContext(), "登录成功", Toast.LENGTH_SHORT).show();
 					Intent intent1 = new Intent(LoginActivity.this,
 							MainActivity.class);
-					Bundle bundle1 = new Bundle();
-					bundle1.putSerializable("userinfo", (Informations) msg.obj);
-					intent1.putExtras(bundle1);
+					HashMap<String, String> map=new HashMap<String,String>();
+					map=(HashMap<String, String>) msg.obj;
+					
+					intent1.putExtra("id", map.get("id"));
+					intent1.putExtra("name", map.get("name"));
 					startActivity(intent1);
+					finish();
 					break;
 				case 2:
 					String errorString = "用户名或密码错误";
@@ -143,57 +155,95 @@ public class LoginActivity extends Activity {
 
 	class MyThread implements Runnable {
 		public void run() {
-			final boolean loginresult = CasClient.getInstance().login(
-					name,
-					pswords,
-					getResources().getString(
-							R.string.LOGIN_SECURITY_CHECK));
-			final boolean noNetWork = CasClient.getInstance().login2(
-					name,
-					pswords,
-					getResources().getString(
-							R.string.LOGIN_SECURITY_CHECK));
-			if (loginresult)
-				Log.i("tag1", "1q");
-			if (loginresult) {
-
-				String msg1 = CasClient.getInstance().doGet(
-						getResources().getString(R.string.USER_GETIMF));
-				try {
-					jsonObject = (new JSONObject(msg1)).getJSONObject("data");
-					number1 = jsonObject.getString("number");
-					role1 = jsonObject.getString("role");
-					roleNum1 = jsonObject.getString("roleNum");
-					name1 = jsonObject.getString("name");
-					userName1 = jsonObject.getString("userName");
-					id1 = jsonObject.getString("id");
-					image1 = jsonObject.getString("image");
-					sex1 = jsonObject.getString("sex");
-					userRole1 = jsonObject.getString("userRole");
-				} catch (JSONException e) {
-					e.printStackTrace();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				informations = new Informations(number1, role1, roleNum1,
-						name1, userName1, id1, image1, sex1, userRole1);
-
-				Message msg = Message.obtain();
-				msg.obj = informations;
-				msg.what = 1;
+			
+			
+			
+//			final boolean loginresult = CasClient.getInstance().login(name,
+//					pswords,
+//					getResources().getString(R.string.LOGIN_SECURITY_CHECK));
+//			final boolean noNetWork = CasClient.getInstance().login2(name,
+//					pswords,
+//					getResources().getString(R.string.LOGIN_SECURITY_CHECK));
+//
+//			if (loginresult) {
+//				if (userDao.findUserByUserName(name)) {
+//					id1=userDao.findIdByUserName(name)+"";
+//					name1=userDao.findNameByUserName(name);
+//				}else {
+//					String msg1 = CasClient.getInstance().doGet(
+//							getResources().getString(R.string.USER_GETIMF));
+//					try {
+//						jsonObject = (new JSONObject(msg1)).getJSONObject("data");
+//						number1 = jsonObject.getString("number");
+//						role1 = jsonObject.getString("role");
+//						roleNum1 = jsonObject.getString("roleNum");
+//						name1 = jsonObject.getString("name");
+//						userName1 = jsonObject.getString("userName");
+//						id1 = jsonObject.getString("id");
+//						image1 = jsonObject.getString("image");
+//						sex1 = jsonObject.getString("sex");
+//						userRole1 = jsonObject.getString("userRole");
+//					} catch (JSONException e) {
+//						e.printStackTrace();
+//					} catch (Exception e) {
+//						e.printStackTrace();
+//					}
+//					HashMap<String, String> map=new HashMap<>();
+//					map.put("id", id1);
+//					map.put("name", name1);
+//					map.put("userName", userName1);
+//					map.put("image", image1);
+//					map.put("sex", sex1);
+//					map.put("userRole", userRole1);
+//					userDao.addUser(map);
+//				}
+//
+//				
+//
+//				HashMap<String, String> map=new HashMap<String, String>();
+//				map.put("name", name);
+//				map.put("id", id1);
+//				Message msg = Message.obtain();
+//
+//				msg.obj=map;
+//				msg.what = 1;
+//				handler.sendMessage(msg);
+//			} else {
+//				if (noNetWork) {
+//					Message msg = Message.obtain();
+//					msg.what = 3;
+//					handler.sendMessage(msg);
+//				} else {
+//
+//					Message msg = Message.obtain();
+//					msg.what = 2;
+//					handler.sendMessage(msg);
+//				}
+//			}
+			if (userDao.findUserByUserName(uname)) {
+				HashMap<String, String> map=new HashMap<String,String>();
+				map.put("id", userDao.findIdByUserName(uname)+"");
+				map.put("name", userDao.findNameByUserName(uname)+"");
+				Message msg=Message.obtain();
+				msg.obj=map;
+				msg.what=1;
 				handler.sendMessage(msg);
-			} else {
-				if (noNetWork) {
-					Message msg = Message.obtain();
-					msg.what = 3;
-					handler.sendMessage(msg);
-				} else {
-
-					Message msg = Message.obtain();
-					msg.what = 2;
-					handler.sendMessage(msg);
-				}
+			}else {
+				HashMap<String, String> map=new HashMap<String,String>();
+				map.put("id", 6+"");
+				map.put("name", "肖竹军");
+				map.put("userName", "xiaozhujun");
+				map.put("image", null);
+				map.put("sex", "男");
+				map.put("userRole", "管理员");
+				userDao.addUser(map);
+				Message msg=Message.obtain();
+				msg.obj=map;
+				msg.what=1;
+				handler.sendMessage(msg);
 			}
+			
+			
 		}
 
 	}

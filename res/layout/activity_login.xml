@@ -3,25 +3,59 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="@drawable/login_bg4"
     android:orientation="vertical"
     android:scrollbars="vertical"
     tools:context="com.csei.devicemanagement.LoginActivity" >
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="60dp"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/logo_name"
+            android:textColor="@color/black"
+            android:textSize="25sp" />
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:background="@color/red"
+            android:contentDescription="@string/divider" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/project_name"
+            android:textColor="@color/black"
+            android:textSize="25sp" />
+    </LinearLayout>
+
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="horizontal" >
+        android:layout_height="match_parent" >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
-            android:layout_marginTop="60dp"
-            android:background="#FFFFFF"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/login_background"
             android:orientation="vertical"
-            android:paddingBottom="20dp"
+            android:paddingBottom="10dp"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:paddingTop="20dp"
@@ -38,8 +72,8 @@
                 android:paddingBottom="5dp"
                 android:paddingLeft="2dp"
                 android:paddingTop="5dp"
-                android:textSize="15sp"
-                android:singleLine="true" >
+                android:singleLine="true"
+                android:textSize="15sp" >
 
                 <requestFocus />
             </EditText>
@@ -55,20 +89,18 @@
                 android:paddingBottom="5dp"
                 android:paddingLeft="2dp"
                 android:paddingTop="5dp"
-                android:textSize="15sp"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:textSize="15sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
                 android:background="#FFFFFF" >
 
                 <CheckBox
                     android:id="@+id/show_passwords"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="22dp"
                     android:layout_weight="1"
                     android:text="@string/show_passwords" />
 
@@ -76,7 +108,6 @@
                     android:id="@+id/remember_passwords"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="22dp"
                     android:layout_weight="1"
                     android:text="@string/remember_passwords" />
             </LinearLayout>
@@ -89,8 +120,12 @@
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
                 android:layout_marginTop="20dp"
+                android:background="@drawable/common_btn_selector"
                 android:gravity="center_vertical|center_horizontal"
-                android:text="@string/submit" />
+                android:text="@string/submit"
+                android:textColor="@color/white"
+                
+                android:textSize="30sp" />
         </LinearLayout>
     </ScrollView>
 
