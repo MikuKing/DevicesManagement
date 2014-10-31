@@ -44,5 +44,9 @@
     <string name="addMainDevice">添加主设备</string>
     <string name="select_store">请选择仓库：</string>
     <string name="select_site">请选择工地：</string>
+    <string name="input_driverName">请输入司机姓名</string>
+    <string name="input_driverTel">请输入司机号码</string>
+    <string name="input_carNum">请输入车牌号</string>
+    
 
 </resources>

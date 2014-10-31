@@ -35,9 +35,9 @@ public class HistoryServiceImple implements HistoryService {
 						Integer.parseInt(map.get("optionType")),
 						Integer.parseInt(map.get("mainDeviceId")),
 						Integer.parseInt(map.get("upLoadFlag")),
-						Integer.parseInt(map.get("driverName")),
-						Integer.parseInt(map.get("carNum")),
-						Integer.parseInt(map.get("driverTel")) });
+						map.get("driverName"),
+						map.get("carNum"),
+						map.get("driverTel") });
 		// 事务成功
 		db.setTransactionSuccessful();
 		// 关闭事务

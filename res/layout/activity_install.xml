@@ -100,7 +100,7 @@
             <ListView
                 android:id="@+id/lv_install"
                 android:layout_width="match_parent"
-                android:layout_height="300dp" >
+                android:layout_height="200sp" >
             </ListView>
         </LinearLayout>
 
@@ -116,7 +116,7 @@
             <Button
                 android:id="@+id/save_install"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="25sp"
                 android:layout_weight="1"
                 android:background="@drawable/btn_default"
                 android:text="@string/save"
@@ -125,7 +125,7 @@
             <Button
                 android:id="@+id/upload_install"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="25sp"
                 android:layout_weight="1"
                 android:background="@drawable/btn_default"
                 android:text="@string/upload"
@@ -134,7 +134,7 @@
             <Button
                 android:id="@+id/cancel_install"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="25sp"
                 android:layout_weight="1"
                 android:background="@drawable/btn_default"
                 android:text="@string/cancel"
@@ -166,7 +166,7 @@
             android:layout_height="40sp"
             android:layout_weight="1"
             android:background="@drawable/btn_default"
-            android:text="addMainDevice"
+            android:text="@string/addMainDevice"
             android:textSize="20sp" />
     </LinearLayout>
 

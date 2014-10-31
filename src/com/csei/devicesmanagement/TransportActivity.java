@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -45,6 +46,9 @@ public class TransportActivity extends Activity {
 	private String driverName="";
 	private String carNum="";
 	private String driverTel="";
+	private EditText et_driverName;
+	private EditText et_driverTel;
+	private EditText et_carNum;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +64,14 @@ public class TransportActivity extends Activity {
 		listviewLayout = findViewById(R.id.listviewLayout_transport);
 		left_back = (ImageView) findViewById(R.id.iv_topbar_left_back_transport);
 		scanDevice = (Button) findViewById(R.id.scan_Button_transport);
+		et_driverName=(EditText) findViewById(R.id.input_driverName_transport);
+		et_driverTel=(EditText) findViewById(R.id.input_driverTel_transport);
+		et_carNum=(EditText) findViewById(R.id.input_carNum_transport);
+		
+		et_carNum.setText("鄂A5555");
+		et_driverName.setText("小明");
+		et_driverTel.setText("027-88888888");
+		
 		listViewRefresh();
 		
 		handler = new Handler() {
@@ -90,13 +102,25 @@ public class TransportActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				dialog = new ProgressDialog(TransportActivity.this);
-				dialog.setTitle("提示");
-				dialog.setMessage("正在扫卡...");
-				dialog.show();
+				driverName=et_driverName.getText().toString().trim();
+				driverTel=et_driverTel.getText().toString().trim();
+				carNum=et_carNum.getText().toString().trim();
+				if ("".equals(driverName)) {
+					Toast.makeText(getApplicationContext(), "请输入司机姓名", Toast.LENGTH_SHORT).show();
+				}else if ("".equals(driverTel)) {
+					Toast.makeText(getApplicationContext(), "请输入司机号码", Toast.LENGTH_SHORT).show();
+				}else if ("".equals(carNum)) {
+					Toast.makeText(getApplicationContext(), "请输入车牌号", Toast.LENGTH_SHORT).show();
+				}else {
+					dialog = new ProgressDialog(TransportActivity.this);
+					dialog.setTitle("提示");
+					dialog.setMessage("正在扫卡...");
+					dialog.show();
+					
+					readCardThread thread = new readCardThread();
+					new Thread(thread).start();
+				}
 				
-				readCardThread thread = new readCardThread();
-				new Thread(thread).start();
 			}
 		});
 		

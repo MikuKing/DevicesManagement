@@ -40,11 +40,8 @@ import android.widget.AdapterView.OnItemSelectedListener;
 public class UninstallActivity extends Activity {
 
 	private ListView listView;
-	private List<Map<String, Object>> list;
-	private EditText input_DeviceId;
-	private EditText input_MainDeviceId;
+	private List<Map<String, String>> list;
 	private String deviceId;
-	private String mainDeviceId;
 	private LinearLayout listAndBottom_bar_uninstall;
 	private MyAdapter adapter;
 	private Button save;
@@ -63,6 +60,8 @@ public class UninstallActivity extends Activity {
 	private Spinner sp_uninstall;
 
 	private static int siteId;
+	private 
+	String[] spItems = new String[] { "工地1", "工地2", "工地3" };
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -76,14 +75,13 @@ public class UninstallActivity extends Activity {
 
 		listAndBottom_bar_uninstall = (LinearLayout) findViewById(R.id.listAndBottom_bar__uninstall);
 
-		list = new ArrayList<Map<String, Object>>();
+		list = new ArrayList<Map<String, String>>();
 		sp_uninstall = (Spinner) findViewById(R.id.Sp_uninstall);
 		save = (Button) findViewById(R.id.savebutton_uninstall);
 		upload = (Button) findViewById(R.id.uploadbutton_uninstall);
 		cancel = (Button) findViewById(R.id.cancelbutton_uninstall);
 		scan = (Button) findViewById(R.id.scan_Button_uninstall);
 		left_back = (ImageView) findViewById(R.id.iv_topbar_left_back_uninstall);
-		String[] spItems = new String[] { "工地1", "工地2", "工地3" };
 
 		ArrayAdapter<String> spAdapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_spinner_item, spItems);
@@ -100,17 +98,15 @@ public class UninstallActivity extends Activity {
 				switch (msg.what) {
 				case 1:
 					dialog.dismiss();
-					input_MainDeviceId.setText((int) (1 + Math.random()
-							* (1000 - 1 + 1))
-							+ "");
+					HashMap<String, String> map=new HashMap<String,String>();
+					map.put("deviceId", (int)(1 + Math.random()* (1000 - 1 + 1))+"");
+					map.put("siteId", siteId+"");
+					list.add(map);
+					listView.setAdapter(adapter);
+					listAndBottom_bar_uninstall.setVisibility(View.VISIBLE);
 					break;
+				
 				case 2:
-					dialog.dismiss();
-					input_DeviceId.setText((int) (1 + Math.random()
-							* (1000 - 1 + 1))
-							+ "");
-					break;
-				case 3:
 					dialog.dismiss();
 					uploadFlag = 1;
 					saveHistory();
@@ -235,27 +231,13 @@ public class UninstallActivity extends Activity {
 				e.printStackTrace();
 			}
 			Message msg = Message.obtain();
-			msg.what = 3;
+			msg.what = 2;
 			handler.sendMessage(msg);
 		}
 
 	}
 
-	class readMainDeviceThread implements Runnable {
-
-		@Override
-		public void run() {
-			try {
-				Thread.sleep(3000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			Message msg = Message.obtain();
-			msg.what = 1;
-			handler.sendMessage(msg);
-		}
-
-	}
+	
 
 	class readDeviceThread implements Runnable {
 
@@ -267,7 +249,7 @@ public class UninstallActivity extends Activity {
 				e.printStackTrace();
 			}
 			Message msg = Message.obtain();
-			msg.what = 2;
+			msg.what = 1;
 			handler.sendMessage(msg);
 		}
 	}
@@ -308,17 +290,15 @@ public class UninstallActivity extends Activity {
 
 	public void saveFunction() {
 		for (int i = 0; i < list.size(); i++) {
-			HashMap<String, Object> map1 = new HashMap<String, Object>();
-			map1 = (HashMap<String, Object>) list.get(i);
+			HashMap<String, String> map1 = new HashMap<String, String>();
+			map1 = (HashMap<String, String>) list.get(i);
 			int deviceIdInt;
-			int mainDeviceIdInt;
 
 			deviceIdInt = Integer.parseInt((String) map1.get("deviceId"));
-			mainDeviceIdInt = Integer.parseInt((String) map1
-					.get("mainDeviceId"));
+			
 
 			HashMap<String, String> map = new HashMap<String, String>();
-			map = getDeviceMap(deviceIdInt, null, userId, 0, mainDeviceIdInt, 0);
+			map = getDeviceMap(deviceIdInt, null, userId, 0, 0, 0);
 			if (deviceDao.findDeviceById(deviceIdInt)) {
 				deviceDao.updateData(map);
 			} else {
@@ -331,14 +311,12 @@ public class UninstallActivity extends Activity {
 
 	public void saveHistory() {
 		for (int i = 0; i < list.size(); i++) {
-			HashMap<String, Object> map1 = new HashMap<String, Object>();
-			map1 = (HashMap<String, Object>) list.get(i);
+			HashMap<String, String> map1 = new HashMap<String, String>();
+			map1 = (HashMap<String, String>) list.get(i);
 			int deviceIdInt;
-			int mainDeviceIdInt;
 
 			deviceIdInt = Integer.parseInt((String) map1.get("deviceId"));
-			mainDeviceIdInt = Integer.parseInt((String) map1
-					.get("mainDeviceId"));
+			
 
 			HashMap<String, String> mapHistory = new HashMap<String, String>();
 			SimpleDateFormat dateFormat = new SimpleDateFormat(
@@ -346,7 +324,7 @@ public class UninstallActivity extends Activity {
 			Date curDate = new Date(System.currentTimeMillis());
 			time = dateFormat.format(curDate);
 			mapHistory = getHistoryMap(time, 3, userId, 0, deviceIdInt,
-					mainDeviceIdInt, uploadFlag, "", "", "");
+					0, uploadFlag, "", "", "");
 			historyDao.addHistory(mapHistory);
 			if (historyDao.findRecordByDeviceId(deviceIdInt + "")) {
 				Toast.makeText(getApplicationContext(), "内容已保存",
@@ -385,11 +363,11 @@ public class UninstallActivity extends Activity {
 	}
 
 	class MyAdapter extends BaseAdapter {
-		private List<Map<String, Object>> list;
+		private List<Map<String, String>> list;
 		private Context context;
 		private LayoutInflater inflater;
 
-		public MyAdapter(Context context, List<Map<String, Object>> list) {
+		public MyAdapter(Context context, List<Map<String, String>> list) {
 			// TODO Auto-generated constructor stub
 			this.list = list;
 			this.inflater = LayoutInflater.from(context);
@@ -431,10 +409,10 @@ public class UninstallActivity extends Activity {
 				convertView.setTag(holder);
 			}
 			holder = (ViewHolder) convertView.getTag();
-			holder.item_tv_left.setText("设备ID："
+			holder.item_tv_left.setText("仓库："
+					+ spItems[Integer.parseInt(list.get(position).get("siteId"))-1]);
+			holder.item_tv_right.setText("设备ID："
 					+ list.get(position).get("deviceId") + "");
-			holder.item_tv_right.setText("主设备ID："
-					+ list.get(position).get("mainDeviceId") + "");
 
 			holder.delete.setOnClickListener(new OnClickListener() {
 

@@ -46,7 +46,7 @@
             <ListView
                 android:id="@+id/add_item_listview_uninstall"
                 android:layout_width="match_parent"
-                android:layout_height="250dp" >
+                android:layout_height="200sp" >
             </ListView>
         </LinearLayout>
 
@@ -61,7 +61,7 @@
             <Button
                 android:id="@+id/savebutton_uninstall"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="25sp"
                 android:layout_weight="1"
                 android:background="@drawable/btn_default"
                 android:text="@string/save"
@@ -70,7 +70,7 @@
             <Button
                 android:id="@+id/uploadbutton_uninstall"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="25sp"
                 android:layout_weight="1"
                 android:background="@drawable/btn_default"
                 android:text="@string/upload"
@@ -79,7 +79,7 @@
             <Button
                 android:id="@+id/cancelbutton_uninstall"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="25sp"
                 android:layout_weight="1"
                 android:background="@drawable/btn_default"
                 android:text="@string/cancel"
