@@ -29,7 +29,7 @@ import com.csei.devicesmanagement.R.color;
 
 public class HistoryActivity extends Activity{
 	
-
+//jfakfdsaklfkalflk
 
 
 	private MyListAdapter adapter;
@@ -77,7 +77,7 @@ public class HistoryActivity extends Activity{
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-
+		
 		MyApplication.getInstance().addActivity(this);
 		setContentView(R.layout.activity_history);
 		
